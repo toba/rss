@@ -1,0 +1,40 @@
+{
+   "name": "@toba/rss",
+   "version": "1.0.0",
+   "description": "Toba RSS module",
+   "private": false,
+   "author": {
+      "name": "Jason Abbott",
+      "url": "http://github.com/toba"
+   },
+   "license": "MIT",
+   "publishConfig": {
+      "access": "public"
+   },
+   "files": ["index.ts"],
+   "scripts": {
+      "test": "jest --coverage"
+   },
+   "keywords": ["rss", "atom", "feed", "syndication", "xml", "wrapper", "blog"],
+   "devDependencies": {
+      "@toba/build": "^1.3.3",
+      "@toba/test": "^1.8.0",
+      "@types/xml": "^1.0.2",
+      "prettier": "^1.11.0",
+      "typescript": "^2.8.0"
+   },
+   "dependencies": {
+      "xml": "^1.0.1"
+   },
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/toba/rss"
+   },
+   "bugs": {
+      "url": "https://github.com/toba/rss/issues"
+   },
+   "prettier": {
+      "singleQuote": true,
+      "tabWidth": 3
+   }
+}
