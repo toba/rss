@@ -53,7 +53,7 @@ export interface Item {
    extensions?: Extension[];
 }
 
-export class RSS {
+export class Feed {
    options: Options;
    items: Item[];
    categories: string[];
@@ -68,17 +68,17 @@ export class RSS {
       this.extensions = [];
    }
 
-   addItem(item: Item): RSS {
+   addItem(item: Item): Feed {
       this.items.push(item);
       return this;
    }
 
-   addCategory(category: string): RSS {
+   addCategory(category: string): Feed {
       this.categories.push(category);
       return this;
    }
 
-   addContributor(contributor: Person): RSS {
+   addContributor(contributor: Person): Feed {
       this.contributors.push(contributor);
       return this;
    }

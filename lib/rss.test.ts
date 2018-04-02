@@ -1,4 +1,4 @@
-import { RSS } from './rss';
+import { Feed } from './rss';
 
 let sampleDate = new Date('Sat, 13 Jul 2013 23:00:00 GMT');
 
