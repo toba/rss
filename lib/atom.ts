@@ -1,19 +1,53 @@
 import { is } from '@toba/tools';
-import { writeTag } from './xml';
+
+export type Attributes = { [key: string]: string };
+
+export enum LinkRelation {
+   Alternate = 'alternate',
+   Enclosre = 'enclosure',
+   Self = 'self'
+}
+
+export function writeTag(
+   name: string,
+   content: string | Date,
+   attr?: Attributes
+) {
+   if (is.value(content)) {
+      if (is.date(content)) {
+         content = content.toISOString();
+      }
+      return `<${name}${writeAttributes(attr)}>${content}</${name}>`;
+   } else {
+      return '';
+   }
+}
+
+export const writeAttributes = (attr: Attributes): string =>
+   is.value(attr)
+      ? Object.keys(attr).reduce(
+           (pairs, key) => pairs + ` ${key}="${attr[key]}"`,
+           ''
+        )
+      : '';
 
 export namespace Atom {
    interface Link {
       href: string;
-      rel?: string;
+      rel?: LinkRelation;
+      type?: MimeType;
+      /** Size in bytes */
+      length?: number;
    }
 
-   interface Person {
+   export interface Person {
       name: string;
       email?: string;
       uri?: string;
    }
 
-   interface Generator {
+   export interface Generator {
+      [index: string]: string;
       name: string;
       uri?: string;
       version?: string;
@@ -45,6 +79,8 @@ export namespace Atom {
        */
       entry: Entry[];
 
+      rights?: string;
+
       /**
        * Program that generated the feed.
        */
@@ -61,7 +97,7 @@ export namespace Atom {
    export interface Entry {
       id: string;
       title: string;
-      link: Link;
+      link: Link | Link[];
 
       /**
        * ISO-8601 value (`toISOString()` standard)
@@ -86,24 +122,56 @@ export namespace Atom {
       content: string;
    }
 
-   export function toString(feed: Feed): string {
-      return `<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-   ${writeTag('id', feed.id)}
-   ${writeTag('title', feed.title)}
-   ${
-      is.value(feed.generator)
-         ? writeTag('generator', feed.generator.name)
-         : null
+   function writeGenerator(g: Generator): string {
+      if (is.value(g)) {
+         const name = g.name;
+         delete g.name;
+         writeTag('generator', name, g);
+      }
+      return '';
    }
-   ${feed.entry.forEach(
-      e =>
-         `<entry>
-            ${writeTag('id', e.id)}
-            ${writeTag('title', e.title)}
-            ${writeTag('content', e.content)}
-         </entry>`
-   )}
-</feed>`;
-   }
+
+   export const write = (feed: Feed): string =>
+      '<?xml version="1.0" encoding="utf-8"?>' +
+      '<feed xmlns="http://www.w3.org/2005/Atom">' +
+      writeTag('id', feed.id) +
+      writeTag('title', feed.title) +
+      writeTag('subtitle', feed.subtitle) +
+      writeTag('rights', feed.rights) +
+      writePerson('author', feed.author) +
+      writeGenerator(feed.generator) +
+      feed.entry.forEach(writeEntry) +
+      '</feed>';
+
+   export const writeEntry = (entry: Entry): string =>
+      '<entry>' +
+      writeTag('id', entry.id) +
+      writeTag('title', entry.title) +
+      writeTag('updated', entry.updated) +
+      writeTag('published', entry.published) +
+      writePerson('author', entry.author) +
+      writePerson('contributor', entry.contributor) +
+      writeTag('content', entry.content) +
+      '</entry>';
+
+   export const writeLink = (link: Link | Link[]): string =>
+      is.array<Link>(link)
+         ? link.reduce((list, l) => list + writeLink(l), '')
+         : `<link href="${link.href}"` +
+           (is.value(link.rel) ? ` rel="${link.rel}"` : '') +
+           (is.value(link.type) ? ` type="${link.type}"` : '') +
+           (is.value(link.length) ? ` length="${link.length}"` : '') +
+           '/>';
+
+   export const writePerson = (
+      tag: 'author' | 'contributor',
+      person: Atom.Person | Atom.Person[]
+   ): string =>
+      is.array<Person>(person)
+         ? person.reduce((list, p) => list + writePerson(tag, p), '')
+         : `<${tag}>` +
+           writeTag('name', person.name) +
+           writeTag('uri', person.uri) +
+           writeTag('email', person.email) +
+           `</${tag}>`;
 }
