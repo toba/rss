@@ -5,10 +5,8 @@
 [![DevDependencies](https://img.shields.io/david/dev/toba/rss.svg)](https://david-dm.org/toba/rss#info=devDependencies&view=list)
 [![codecov](https://codecov.io/gh/toba/rss/branch/master/graph/badge.svg)](https://codecov.io/gh/toba/rss)
 
-This is a TypeScript clone of [jpmonette/feedly](https://github.com/jpmonette/feed).
-
 # Usage
 
 ```
-yarn add @toba/rss --dev
+yarn add @toba/rss
 ```
