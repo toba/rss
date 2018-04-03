@@ -1,7 +1,7 @@
 {
-   "name": "@toba/rss",
+   "name": "@toba/feed",
    "version": "1.0.0",
-   "description": "Toba RSS module",
+   "description": "Toba syndication module",
    "private": false,
    "author": {
       "name": "Jason Abbott",
@@ -11,25 +11,14 @@
    "publishConfig": {
       "access": "public"
    },
-   "files": [
-      "index.ts"
-   ],
+   "files": ["index.ts"],
    "scripts": {
       "test": "jest --coverage"
    },
-   "keywords": [
-      "rss",
-      "atom",
-      "feed",
-      "syndication",
-      "xml",
-      "wrapper",
-      "blog"
-   ],
+   "keywords": ["rss", "atom", "feed", "syndication", "xml", "wrapper", "blog"],
    "devDependencies": {
       "@toba/build": "^1.3.3",
-      "@toba/test": "^1.8.0",
-      "@types/xml": "^1.0.2",
+      "@toba/test": "^1.9.0",
       "prettier": "^1.11.0",
       "typescript": "^2.8.0"
    },
@@ -39,10 +28,10 @@
    },
    "repository": {
       "type": "git",
-      "url": "https://github.com/toba/rss"
+      "url": "https://github.com/toba/feed"
    },
    "bugs": {
-      "url": "https://github.com/toba/rss/issues"
+      "url": "https://github.com/toba/feed/issues"
    },
    "prettier": {
       "singleQuote": true,

@@ -2,22 +2,26 @@ import { is } from '@toba/tools';
 
 export type Attributes = { [key: string]: string };
 
+export type AtomEntity = { [key: string]: string | Date };
+
 export enum LinkRelation {
    Alternate = 'alternate',
    Enclosre = 'enclosure',
    Self = 'self'
 }
 
-export function writeTag(
-   name: string,
-   content: string | Date,
+export function writeTag<T, K extends keyof T>(
+   name: K,
+   entity: T,
    attr?: Attributes
 ) {
+   const content = entity[name];
    if (is.value(content)) {
-      if (is.date(content)) {
-         content = content.toISOString();
-      }
-      return `<${name}${writeAttributes(attr)}>${content}</${name}>`;
+      const text = is.date(content)
+         ? content.toISOString()
+         : content.toString();
+
+      return `<${name}${writeAttributes(attr)}>${text}</${name}>`;
    } else {
       return '';
    }
@@ -134,10 +138,10 @@ export namespace Atom {
    export const write = (feed: Feed): string =>
       '<?xml version="1.0" encoding="utf-8"?>' +
       '<feed xmlns="http://www.w3.org/2005/Atom">' +
-      writeTag('id', feed.id) +
-      writeTag('title', feed.title) +
-      writeTag('subtitle', feed.subtitle) +
-      writeTag('rights', feed.rights) +
+      writeTag('id', feed) +
+      writeTag('title', feed) +
+      writeTag('subtitle', feed) +
+      writeTag('rights', feed) +
       writePerson('author', feed.author) +
       writeGenerator(feed.generator) +
       feed.entry.forEach(writeEntry) +
@@ -145,13 +149,13 @@ export namespace Atom {
 
    export const writeEntry = (entry: Entry): string =>
       '<entry>' +
-      writeTag('id', entry.id) +
-      writeTag('title', entry.title) +
-      writeTag('updated', entry.updated) +
-      writeTag('published', entry.published) +
+      writeTag('id', entry) +
+      writeTag('title', entry) +
+      writeTag('updated', entry) +
+      writeTag('published', entry) +
       writePerson('author', entry.author) +
       writePerson('contributor', entry.contributor) +
-      writeTag('content', entry.content) +
+      writeTag('content', entry) +
       '</entry>';
 
    export const writeLink = (link: Link | Link[]): string =>
@@ -170,8 +174,8 @@ export namespace Atom {
       is.array<Person>(person)
          ? person.reduce((list, p) => list + writePerson(tag, p), '')
          : `<${tag}>` +
-           writeTag('name', person.name) +
-           writeTag('uri', person.uri) +
-           writeTag('email', person.email) +
+           writeTag('name', person) +
+           writeTag('uri', person) +
+           writeTag('email', person) +
            `</${tag}>`;
 }

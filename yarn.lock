@@ -140,7 +140,7 @@
     tslint-config-prettier "^1.10.0"
     tslint-consistent-codestyle "^1.12.0"
 
-"@toba/test@^1.8.0":
+"@toba/test@^1.9.0":
   version "1.9.4"
   resolved "https://registry.yarnpkg.com/@toba/test/-/test-1.9.4.tgz#b1db4862d893f0696f72ee52472ca22509d3634c"
   dependencies:
@@ -177,12 +177,6 @@
 "@types/node@*", "@types/node@^9.4.7":
   version "9.6.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.1.tgz#e2d374ef15b315b48e7efc308fa1a7cd51faa06c"
-
-"@types/xml@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@types/xml/-/xml-1.0.2.tgz#2c210b9a3ba9cf944520b30eada311c23677c1fc"
-  dependencies:
-    "@types/node" "*"
 
 abab@^1.0.4:
   version "1.0.4"
