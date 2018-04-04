@@ -3,14 +3,17 @@ import { writeTag, writeAttributes, writePerson, writeLink } from './atom';
 import { Link } from './types';
 
 test('writes basic tags', () => {
-   expect(writeTag('tag', 'content')).toBe('<tag>content</tag>');
+   const now = new Date();
+   const thing1 = { tag: 'content', ignore: 'stuff' };
+   const thing2 = { when: now };
+   expect(writeTag('tag', thing1)).toBe('<tag>content</tag>');
+   expect(writeTag('when', thing2)).toBe(`<when>${now.toISOString()}</when>`);
 });
 
 test('writes attribute key-values', () => {
    expect(writeAttributes({ key1: 'value1', key2: 'value2' })).toBe(
       ' key1="value1" key2="value2"'
    );
-
    expect(writeAttributes(null)).toBe('');
 });
 
