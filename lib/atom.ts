@@ -1,12 +1,21 @@
 import { is } from '@toba/tools';
-import { Attributes, Link, Person, Generator, Feed, Entry } from './types';
+import {
+   Attributes,
+   Link,
+   Person,
+   Generator,
+   Feed,
+   Entry,
+   ISyndicate
+} from './types';
 
 export function writeTag<T, K extends keyof T>(
    name: K,
    entity: T,
    attr?: Attributes
-) {
+): string {
    const content = entity[name];
+
    if (is.value(content)) {
       const text = is.date(content)
          ? content.toISOString()
@@ -34,6 +43,8 @@ export function writeGenerator(g: Generator): string {
    }
    return '';
 }
+
+export const render = (source: ISyndicate): string => write(source.feedJSON());
 
 export const write = (feed: Feed): string =>
    '<?xml version="1.0" encoding="utf-8"?>' +

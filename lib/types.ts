@@ -1,5 +1,9 @@
 import { MimeType, LinkRelation } from '@toba/tools';
 
+export interface ISyndicate {
+   feedJSON(): Feed;
+}
+
 export type Attributes = { [key: string]: string };
 
 export type AtomEntity = { [key: string]: string | Date };
@@ -18,6 +22,9 @@ export interface Person {
    uri?: string;
 }
 
+/**
+ * Software that generated the feed.
+ */
 export interface Generator {
    [index: string]: string;
    name: string;
