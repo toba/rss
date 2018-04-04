@@ -1,5 +1,6 @@
-import { MimeType } from '@toba/tools';
-import { writeTag, writeAttributes, Atom, LinkRelation } from './atom';
+import { MimeType, LinkRelation } from '@toba/tools';
+import { writeTag, writeAttributes, writePerson, writeLink } from './atom';
+import { Link } from './types';
 
 test('writes basic tags', () => {
    expect(writeTag('tag', 'content')).toBe('<tag>content</tag>');
@@ -20,25 +21,26 @@ test('writes person', () => {
    const expect2 =
       '<author><name>Bob</name><email>bob@test.com</email></author>';
 
-   expect(Atom.writePerson('author', person1)).toBe(expect1);
-   expect(Atom.writePerson('author', person2)).toBe(expect2);
-   expect(Atom.writePerson('author', [person1, person2])).toBe(
-      expect1 + expect2
-   );
+   expect(writePerson('author', person1)).toBe(expect1);
+   expect(writePerson('author', person2)).toBe(expect2);
+   expect(writePerson('author', [person1, person2])).toBe(expect1 + expect2);
 });
 
 test('writes link', () => {
-   const link1 = { href: 'http://www.test.com', rel: LinkRelation.Alternate };
-   const link2 = {
-      href: 'http://www.test.com',
-      type: MimeType.Atom,
-      rel: LinkRelation.Enclosre
+   const href = 'http://www.test.com';
+   const link1: Link = {
+      href,
+      rel: LinkRelation.Alternate
    };
-   const expect1 = '<link href="http://www.test.com" rel="alternate"/>';
-   const expect2 =
-      '<link href="http://www.test.com" rel="enclosure" type="application/atom+xml"/>';
+   const link2: Link = {
+      href,
+      type: MimeType.Atom,
+      rel: LinkRelation.Enclosure
+   };
+   const expect1 = `<link href="${href}" rel="alternate"/>`;
+   const expect2 = `<link href="${href}" rel="enclosure" type="application/atom+xml"/>`;
 
-   expect(Atom.writeLink(link1)).toBe(expect1);
-   expect(Atom.writeLink(link2)).toBe(expect2);
-   expect(Atom.writeLink([link1, link2])).toBe(expect1 + expect2);
+   expect(writeLink(link1)).toBe(expect1);
+   expect(writeLink(link2)).toBe(expect2);
+   expect(writeLink([link1, link2])).toBe(expect1 + expect2);
 });
