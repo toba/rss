@@ -4,9 +4,11 @@ export interface ISyndicate {
    feedJSON(): Feed;
 }
 
-export type Attributes = { [key: string]: string };
+//export type Attributes = { [key: string]: string };
+export type Attributes = Map<string, string>;
 
-export type AtomEntity = { [key: string]: string | Date };
+//export type AtomEntity = { [key: string]: string | Date };
+export type AtomEntity = Map<string, string | Date>;
 
 export interface Link {
    href: string;
@@ -28,6 +30,7 @@ export interface Person {
 export interface Generator {
    [index: string]: string;
    name: string;
+   generator?: string;
    uri?: string;
    version?: string;
 }

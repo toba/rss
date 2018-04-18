@@ -1,6 +1,6 @@
 {
    "name": "@toba/feed",
-   "version": "1.0.1",
+   "version": "1.0.2",
    "description": "Toba syndication module",
    "private": false,
    "author": {
@@ -17,13 +17,13 @@
    },
    "keywords": ["rss", "atom", "feed", "syndication", "xml", "wrapper", "blog"],
    "devDependencies": {
-      "@toba/build": "^1.3.3",
-      "@toba/test": "^1.9.0",
-      "prettier": "^1.11.0",
+      "@toba/build": "^1.4.0",
+      "@toba/test": "^1.12.0",
+      "prettier": "^1.12.0",
       "typescript": "^2.8.0"
    },
    "dependencies": {
-      "@toba/tools": "^1.18.0"
+      "@toba/tools": "^1.20.0"
    },
    "repository": {
       "type": "git",

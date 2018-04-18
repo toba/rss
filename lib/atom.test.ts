@@ -11,9 +11,11 @@ test('writes basic tags', () => {
 });
 
 test('writes attribute key-values', () => {
-   expect(writeAttributes({ key1: 'value1', key2: 'value2' })).toBe(
-      ' key1="value1" key2="value2"'
-   );
+   const attr = new Map<string, string>([
+      ['key1', 'value1'],
+      ['key2', 'value2']
+   ]);
+   expect(writeAttributes(attr)).toBe(' key1="value1" key2="value2"');
    expect(writeAttributes(null)).toBe('');
 });
 
