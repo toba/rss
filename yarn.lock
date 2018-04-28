@@ -167,6 +167,12 @@
   dependencies:
     zlib "^1.0.5"
 
+"@toba/tools@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@toba/tools/-/tools-2.2.0.tgz#dd3090ccab75de546e5b6e37fa6fcd1836350790"
+  dependencies:
+    zlib "^1.0.5"
+
 "@types/jest@^22.2.0":
   version "22.2.3"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.3.tgz#0157c0316dc3722c43a7b71de3fdf3acbccef10d"

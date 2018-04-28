@@ -1,3 +1,4 @@
+import '@toba/test';
 import { MimeType, LinkRelation } from '@toba/tools';
 import { writeTag, writeAttributes, writePerson, writeLink } from './atom';
 import { Link } from './types';

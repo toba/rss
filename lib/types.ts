@@ -1,13 +1,13 @@
 import { MimeType, LinkRelation } from '@toba/tools';
 
+/**
+ * Class can be rendered as an RSS/Atom feed.
+ */
 export interface ISyndicate {
    feedJSON(): Feed;
 }
 
-//export type Attributes = { [key: string]: string };
 export type Attributes = Map<string, string>;
-
-//export type AtomEntity = { [key: string]: string | Date };
 export type AtomEntity = Map<string, string | Date>;
 
 export interface Link {
