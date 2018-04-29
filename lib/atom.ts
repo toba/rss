@@ -59,7 +59,8 @@ export function writeGenerator(g: Generator): string {
    return '';
 }
 
-export const render = (source: ISyndicate): string => write(source.feedJSON());
+export const render = (source: ISyndicate<Feed>): string =>
+   write(source.rssJSON());
 
 /**
  * Entry-point for writing Atom feed XML.

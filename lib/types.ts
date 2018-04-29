@@ -3,8 +3,8 @@ import { MimeType, LinkRelation } from '@toba/tools';
 /**
  * Class can be rendered as an RSS/Atom feed.
  */
-export interface ISyndicate {
-   feedJSON(): Feed;
+export interface ISyndicate<T extends Feed | Entry> {
+   rssJSON(): T;
 }
 
 export type Attributes = Map<string, string>;
