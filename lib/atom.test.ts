@@ -1,14 +1,28 @@
 import '@toba/test';
 import { MimeType, LinkRelation } from '@toba/tools';
-import { writeTag, writeAttributes, writePerson, writeLink } from './atom';
+import {
+   writeTag,
+   writeTextTag,
+   writeEntityTag,
+   writeAttributes,
+   writePerson,
+   writeLink
+} from './atom';
 import { Link } from './types';
 
 test('writes basic tags', () => {
+   expect(writeTag('tag', 'value1')).toBe('<tag>value1</tag>');
+   expect(writeTag('when', 'value2')).toBe(`<when>value2</when>`);
+});
+
+test('writes entity tags', () => {
    const now = new Date();
    const thing1 = { tag: 'content', ignore: 'stuff' };
    const thing2 = { when: now };
-   expect(writeTag('tag', thing1)).toBe('<tag>content</tag>');
-   expect(writeTag('when', thing2)).toBe(`<when>${now.toISOString()}</when>`);
+   expect(writeEntityTag('tag', thing1)).toBe('<tag>content</tag>');
+   expect(writeEntityTag('when', thing2)).toBe(
+      `<when>${now.toISOString()}</when>`
+   );
 });
 
 test('writes attribute key-values', () => {
