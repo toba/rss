@@ -1,4 +1,4 @@
-import { is } from '@toba/tools';
+import { is, htmlEscape } from '@toba/tools';
 import {
    Attributes,
    Link,
@@ -99,7 +99,7 @@ export function writeTextTag<T extends Feed | Entry, K extends keyof T>(
          value = content;
       } else if (is.value<Text>(content)) {
          type = content.type;
-         value = content.value;
+         value = htmlEscape(content.value);
       }
       attr.set('type', type);
    }
