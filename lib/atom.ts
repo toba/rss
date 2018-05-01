@@ -141,11 +141,12 @@ export const writeEntry = (entry: Entry): string =>
 export const writeLink = (link: Link | Link[]): string =>
    is.array<Link>(link)
       ? link.reduce((list, l) => list + writeLink(l), '')
-      : `<link href="${link.href}"` +
-        (is.value(link.rel) ? ` rel="${link.rel}"` : '') +
-        (is.value(link.type) ? ` type="${link.type}"` : '') +
-        (is.value(link.length) ? ` length="${link.length}"` : '') +
-        '/>';
+      : `<link${Object.keys(link)
+           .sort()
+           .reduce((attr: string, key: string) => {
+              const value = link[key];
+              return attr + (is.value(value) ? ` ${key}="${value}"` : '');
+           }, '')}/>`;
 
 /**
  * @see https://tools.ietf.org/html/rfc4287#page-10

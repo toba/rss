@@ -1,6 +1,6 @@
 {
    "name": "@toba/feed",
-   "version": "1.2.0",
+   "version": "1.2.2",
    "description": "Toba syndication module",
    "private": false,
    "author": {
@@ -11,23 +11,11 @@
    "publishConfig": {
       "access": "public"
    },
-   "files": [
-      "index.ts",
-      "lib/atom.ts",
-      "lib/types.ts"
-   ],
+   "files": ["index.ts", "lib/atom.ts", "lib/types.ts"],
    "scripts": {
       "test": "jest --coverage"
    },
-   "keywords": [
-      "rss",
-      "atom",
-      "feed",
-      "syndication",
-      "xml",
-      "wrapper",
-      "blog"
-   ],
+   "keywords": ["rss", "atom", "feed", "syndication", "xml", "wrapper", "blog"],
    "devDependencies": {
       "@toba/build": "^1.5.0",
       "@toba/test": "^1.13.0",
@@ -35,7 +23,7 @@
       "typescript": "^2.8.0"
    },
    "dependencies": {
-      "@toba/tools": "^2.2.0"
+      "@toba/tools": "^2.3.0"
    },
    "repository": {
       "type": "git",

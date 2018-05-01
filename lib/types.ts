@@ -14,6 +14,7 @@ export type AtomEntity = Map<string, string | Date>;
  * @see https://validator.w3.org/feed/docs/atom.html#link
  */
 export interface Link {
+   [index: string]: string | LinkRelation | MimeType | number;
    /** URI of the referenced resource (typically a Web page). */
    href: string;
    rel?: LinkRelation;
