@@ -128,16 +128,19 @@ export const write = (feed: Feed): string =>
    writeEntityTag('rights', feed) +
    writePerson('author', feed.author) +
    writeGenerator(feed.generator) +
-   feed.entry.map(writeEntry).join('') +
+   feed.entry.map(e => writeEntry(e, feed.author)).join('') +
    '</feed>';
 
-export const writeEntry = (entry: Entry): string =>
+export const writeEntry = (
+   entry: Entry,
+   feedAuthor: Person | Person[] = null
+): string =>
    '<entry>' +
    writeEntityTag('id', entry) +
    writeTextTag('title', entry) +
    writeEntityTag('updated', entry) +
    writeEntityTag('published', entry) +
-   writePerson('author', entry.author) +
+   (feedAuthor == entry.author ? '' : writePerson('author', entry.author)) +
    writePerson('contributor', entry.contributor) +
    writeTextTag('rights', entry) +
    writeTextTag('content', entry) +

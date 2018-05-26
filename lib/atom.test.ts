@@ -11,7 +11,7 @@ import {
 } from './atom';
 import { Link, Person, Entry, Feed, TextType } from './types';
 
-const someDate = new Date(Date.UTC(1973, 15, 3, 12, 0, 0));
+const someDate = new Date(Date.UTC(1973, 2, 15, 0, 0, 0));
 const entry: Entry = {
    id: 'id',
    title: 'title',
@@ -20,8 +20,11 @@ const entry: Entry = {
       type: TextType.HTML
    },
    updated: someDate,
+   author: {
+      name: 'Fred',
+      email: 'fred@his-house.com'
+   },
    published: someDate,
-   contributor: null,
    content: 'content',
    link: {
       href: 'http://test.com'
@@ -99,6 +102,11 @@ test('writes link', () => {
 
 test('writes feed', () => {
    const person: Person = { name: 'Bob', email: 'bob@test.com' };
+   const entry2: Entry = Object.assign({}, entry, {
+      id: 'id2',
+      title: 'Title 2',
+      author: person
+   });
    const feed: Feed = {
       id: 'http://feed.com',
       title: 'Feed Title',
@@ -107,7 +115,7 @@ test('writes feed', () => {
       author: person,
       contributor: person,
       link: 'http://link.com',
-      entry: [entry]
+      entry: [entry, entry2]
    };
 
    expect(write(feed)).toMatchSnapshot();

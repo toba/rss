@@ -142,7 +142,7 @@ export interface Feed {
    author: Person | Person[];
 
    /**
-    * Names one contributor to the feed. An feed may have multiple contributor
+    * Names one contributor to the feed. A feed may have multiple contributor
     * elements.
     */
    contributor: Person | Person[];
@@ -307,7 +307,7 @@ export interface Entry {
     * </author>
     */
    author?: Person | Person[];
-   contributor: Person | Person[];
+   contributor?: Person | Person[];
 
    /**
     * Contains or links to the complete content of the entry. Content must be
