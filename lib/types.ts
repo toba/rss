@@ -17,6 +17,7 @@ export interface Link {
    [index: string]: string | LinkRelation | MimeType | number;
    /** URI of the referenced resource (typically a Web page). */
    href: string;
+   /** Relation defaults to `alternate` if not specified. */
    rel?: LinkRelation;
    /**
     * Human readable information about the link, typically for display purposes.
@@ -151,7 +152,7 @@ export interface Feed {
     * `rel` attribute. A feed is limited to one alternate per type and hreflang.
     * A feed should contain a link back to the feed itself.
     */
-   link: Link;
+   link: string | Link;
 
    /**
     * Identifies a small image which provides iconic visual identification for

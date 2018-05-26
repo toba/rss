@@ -1,6 +1,6 @@
 {
    "name": "@toba/feed",
-   "version": "1.2.2",
+   "version": "1.2.4",
    "description": "Toba syndication module",
    "private": false,
    "author": {
@@ -23,7 +23,7 @@
       "typescript": "^2.8.0"
    },
    "dependencies": {
-      "@toba/tools": "^2.3.0"
+      "@toba/tools": "^3.1.0"
    },
    "repository": {
       "type": "git",

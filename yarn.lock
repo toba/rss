@@ -173,9 +173,9 @@
   dependencies:
     zlib "^1.0.5"
 
-"@toba/tools@^2.3.0":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@toba/tools/-/tools-2.3.2.tgz#7e32af24e125f310f45619bf0397b323b9be66c6"
+"@toba/tools@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@toba/tools/-/tools-3.1.0.tgz#8ee9eed36fec141fc99c73d636a613c94109fece"
   dependencies:
     zlib "^1.0.5"
 
