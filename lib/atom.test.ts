@@ -11,7 +11,7 @@ import {
 } from './atom';
 import { Link, Person, Entry, Feed, TextType } from './types';
 
-const someDate = new Date(1973, 15, 3, 12, 0, 0);
+const someDate = new Date(Date.UTC(1973, 15, 3, 12, 0, 0));
 const entry: Entry = {
    id: 'id',
    title: 'title',
