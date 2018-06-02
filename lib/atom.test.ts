@@ -26,9 +26,7 @@ const entry: Entry = {
    },
    published: someDate,
    content: 'content',
-   link: {
-      href: 'http://test.com'
-   }
+   link: 'http://test.com'
 };
 
 test('writes basic tags', () => {

@@ -242,9 +242,12 @@ export interface Entry {
     * `hreflang`. An entry must contain an alternate link if there is no
     * `content` element.
     *
+    * Link `rel` will default to `alternate` if only a URL string is provided.
+    * Link objects must therefore be used if assigning multiple links.
+    *
     * @example <link rel="alternate" href="/blog/1234"/>
     */
-   link: Link | Link[];
+   link: Link | Link[] | string;
 
    /**
     * Contains the time of the initial creation or first availability of the
