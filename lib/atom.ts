@@ -27,7 +27,7 @@ export function writeEntityTag<
    if (is.value(content)) {
       text = is.date(content) ? content.toISOString() : content.toString();
    }
-   return writeTag(name, text, attr);
+   return writeTag(name as string, text, attr);
 }
 
 /**
@@ -105,7 +105,7 @@ export function writeTextTag<T extends Feed | Entry, K extends keyof T>(
       }
       attr.set('type', type);
    }
-   return writeTag(name, value, attr);
+   return writeTag(name as string, value, attr);
 }
 
 /**
