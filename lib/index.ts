@@ -1,4 +1,4 @@
-export { render } from './lib/atom';
+export { render } from './atom';
 export {
    Entry as AtomEntry,
    Feed as AtomFeed,
@@ -9,4 +9,4 @@ export {
    TextType as AtomTextType,
    Category as AtomCategory,
    ISyndicate
-} from './lib/types';
+} from './types';
