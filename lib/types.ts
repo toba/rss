@@ -17,6 +17,7 @@ export interface Link {
    [index: string]: string | LinkRelation | MimeType | number;
    /** URI of the referenced resource (typically a Web page). */
    href: string;
+   /** Relation defaults to `alternate` if not specified. */
    rel?: LinkRelation;
    /**
     * Human readable information about the link, typically for display purposes.
@@ -141,7 +142,7 @@ export interface Feed {
    author: Person | Person[];
 
    /**
-    * Names one contributor to the feed. An feed may have multiple contributor
+    * Names one contributor to the feed. A feed may have multiple contributor
     * elements.
     */
    contributor: Person | Person[];
@@ -151,7 +152,7 @@ export interface Feed {
     * `rel` attribute. A feed is limited to one alternate per type and hreflang.
     * A feed should contain a link back to the feed itself.
     */
-   link: Link;
+   link: string | Link;
 
    /**
     * Identifies a small image which provides iconic visual identification for
@@ -241,9 +242,12 @@ export interface Entry {
     * `hreflang`. An entry must contain an alternate link if there is no
     * `content` element.
     *
+    * Link `rel` will default to `alternate` if only a URL string is provided.
+    * Link objects must therefore be used if assigning multiple links.
+    *
     * @example <link rel="alternate" href="/blog/1234"/>
     */
-   link: Link | Link[];
+   link: Link | Link[] | string;
 
    /**
     * Contains the time of the initial creation or first availability of the
@@ -306,7 +310,7 @@ export interface Entry {
     * </author>
     */
    author?: Person | Person[];
-   contributor: Person | Person[];
+   contributor?: Person | Person[];
 
    /**
     * Contains or links to the complete content of the entry. Content must be

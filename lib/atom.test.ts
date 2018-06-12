@@ -1,6 +1,7 @@
 import '@toba/test';
 import { MimeType, LinkRelation, htmlEscape } from '@toba/tools';
 import {
+   write,
    writeTag,
    writeTextTag,
    writeEntityTag,
@@ -8,9 +9,9 @@ import {
    writePerson,
    writeLink
 } from './atom';
-import { Link, Person, Entry, TextType } from './types';
+import { Link, Person, Entry, Feed, TextType } from './types';
 
-const now = new Date();
+const someDate = new Date(Date.UTC(1973, 2, 15, 0, 0, 0));
 const entry: Entry = {
    id: 'id',
    title: 'title',
@@ -18,13 +19,14 @@ const entry: Entry = {
       value: '<p>summary</p>',
       type: TextType.HTML
    },
-   updated: now,
-   published: now,
-   contributor: null,
+   updated: someDate,
+   author: {
+      name: 'Fred',
+      email: 'fred@his-house.com'
+   },
+   published: someDate,
    content: 'content',
-   link: {
-      href: 'http://test.com'
-   }
+   link: 'http://test.com'
 };
 
 test('writes basic tags', () => {
@@ -47,7 +49,7 @@ test('writes entity tags', () => {
    };
    expect(writeEntityTag('name', p)).toBe('<name>Person One</name>');
    expect(writeEntityTag('updated', entry)).toBe(
-      `<updated>${now.toISOString()}</updated>`
+      `<updated>${someDate.toISOString()}</updated>`
    );
 });
 
@@ -83,6 +85,8 @@ test('writes link', () => {
       type: MimeType.Atom,
       rel: LinkRelation.Enclosure
    };
+   const link3 = href;
+
    const expect1 = `<link href="${href}" rel="${LinkRelation.Alternate}"/>`;
    const expect2 = `<link href="${href}" rel="${
       LinkRelation.Enclosure
@@ -91,4 +95,26 @@ test('writes link', () => {
    expect(writeLink(link1)).toBe(expect1);
    expect(writeLink(link2)).toBe(expect2);
    expect(writeLink([link1, link2])).toBe(expect1 + expect2);
+   expect(writeLink(link3)).toBe(expect1);
+});
+
+test('writes feed', () => {
+   const person: Person = { name: 'Bob', email: 'bob@test.com' };
+   const entry2: Entry = Object.assign({}, entry, {
+      id: 'id2',
+      title: 'Title 2',
+      author: person
+   });
+   const feed: Feed = {
+      id: 'http://feed.com',
+      title: 'Feed Title',
+      subtitle: 'Feed Subtitle',
+      updated: someDate,
+      author: person,
+      contributor: person,
+      link: 'http://link.com',
+      entry: [entry, entry2]
+   };
+
+   expect(write(feed)).toMatchSnapshot();
 });

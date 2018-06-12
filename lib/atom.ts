@@ -1,4 +1,4 @@
-import { is, htmlEscape } from '@toba/tools';
+import { is, htmlEscape, LinkRelation } from '@toba/tools';
 import {
    Attributes,
    Link,
@@ -69,6 +69,8 @@ export function writeGenerator(g: Generator): string {
 }
 
 /**
+ * Write tag with attribute for content type.
+ *
  * @example <title type="text">AT&amp;T bought by SBC!</title>
  * @example
  * <title type="html">
@@ -106,6 +108,9 @@ export function writeTextTag<T extends Feed | Entry, K extends keyof T>(
    return writeTag(name, value, attr);
 }
 
+/**
+ * Render XML text for class that implements `ISyndicate`.
+ */
 export const render = (source: ISyndicate<Feed>): string =>
    write(source.rssJSON());
 
@@ -123,30 +128,39 @@ export const write = (feed: Feed): string =>
    writeEntityTag('rights', feed) +
    writePerson('author', feed.author) +
    writeGenerator(feed.generator) +
-   feed.entry.forEach(writeEntry) +
+   feed.entry.map(e => writeEntry(e, feed.author)).join('') +
    '</feed>';
 
-export const writeEntry = (entry: Entry): string =>
+export const writeEntry = (
+   entry: Entry,
+   feedAuthor: Person | Person[] = null
+): string =>
    '<entry>' +
    writeEntityTag('id', entry) +
    writeTextTag('title', entry) +
    writeEntityTag('updated', entry) +
    writeEntityTag('published', entry) +
-   writePerson('author', entry.author) +
+   (feedAuthor == entry.author ? '' : writePerson('author', entry.author)) +
    writePerson('contributor', entry.contributor) +
    writeTextTag('rights', entry) +
    writeTextTag('content', entry) +
+   writeTextTag('summary', entry) +
    '</entry>';
 
-export const writeLink = (link: Link | Link[]): string =>
-   is.array<Link>(link)
-      ? link.reduce((list, l) => list + writeLink(l), '')
-      : `<link${Object.keys(link)
-           .sort()
-           .reduce((attr: string, key: string) => {
-              const value = link[key];
-              return attr + (is.value(value) ? ` ${key}="${value}"` : '');
-           }, '')}/>`;
+/**
+ * Write link text.
+ */
+export const writeLink = (link: string | Link | (string | Link)[]): string =>
+   is.array(link)
+      ? link.reduce<string>((list, l) => list + writeLink(l), '')
+      : is.text(link)
+         ? writeLink({ href: link, rel: LinkRelation.Alternate })
+         : `<link${Object.keys(link)
+              .sort()
+              .reduce((attr: string, key: string) => {
+                 const value = link[key];
+                 return attr + (is.value(value) ? ` ${key}="${value}"` : '');
+              }, '')}/>`;
 
 /**
  * @see https://tools.ietf.org/html/rfc4287#page-10
@@ -166,8 +180,10 @@ export const writePerson = (
 ): string =>
    is.array<Person>(person)
       ? person.reduce((list, p) => list + writePerson(tag, p), '')
-      : `<${tag}>` +
-        writeEntityTag('name', person) +
-        writeEntityTag('uri', person) +
-        writeEntityTag('email', person) +
-        `</${tag}>`;
+      : is.value(person)
+         ? `<${tag}>` +
+           writeEntityTag('name', person) +
+           writeEntityTag('uri', person) +
+           writeEntityTag('email', person) +
+           `</${tag}>`
+         : '';
