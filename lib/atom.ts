@@ -40,7 +40,9 @@ export const writeTag = (
    value: string,
    attr?: Attributes
 ): string =>
-   is.empty(value) ? '' : `<${name}${writeAttributes(attr)}>${value}</${name}>`;
+   is.empty(value)
+      ? ''
+      : `<${name}${writeAttributes(attr)}>${htmlEscape(value)}</${name}>`;
 
 /**
  * Write attribute key-value pair within XML tag.
@@ -101,7 +103,7 @@ export function writeTextTag<T extends Feed | Entry, K extends keyof T>(
          value = content;
       } else if (is.value<Text>(content)) {
          type = content.type;
-         value = htmlEscape(content.value);
+         value = content.value;
       }
       attr.set('type', type);
    }
