@@ -33,7 +33,7 @@
       "@toba/build": "^1.5.0",
       "@toba/test": "^1.13.0",
       "prettier": "^1.13.0",
-      "typescript": "^2.9.0"
+      "typescript": "^3.1.0"
    },
    "dependencies": {
       "@toba/tools": "^3.1.0"
