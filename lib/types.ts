@@ -14,7 +14,7 @@ export type AtomEntity = Map<string, string | Date>;
  * @see https://validator.w3.org/feed/docs/atom.html#link
  */
 export interface Link {
-   [index: string]: string | LinkRelation | MimeType | number;
+   [index: string]: string | LinkRelation | MimeType | number | undefined;
    /** URI of the referenced resource (typically a Web page). */
    href: string;
    /** Relation defaults to `alternate` if not specified. */
@@ -84,7 +84,7 @@ export interface Category {
  * Software that generated the feed.
  */
 export interface Generator {
-   [index: string]: string;
+   [index: string]: string | undefined;
    name: string;
    generator?: string;
    uri?: string;

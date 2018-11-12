@@ -182,12 +182,7 @@
     jest "^23.5.0"
     ts-jest "^23.10.4"
 
-"@toba/tools@^3.15.5":
-  version "3.15.6"
-  resolved "https://registry.yarnpkg.com/@toba/tools/-/tools-3.15.6.tgz#ecd6f0499e4a28536f786a5a04333ed3844ec24b"
-  integrity sha512-A0Urg6DrPfnPxMoG06cV6SmczsHDzBozM2N6lqERhGXJjr/UWqNcwXXdiv1ztTBhKT6bu0c35YvqnmOdEd9RVQ==
-
-"@toba/tools@^4.0.0":
+"@toba/tools@^4.0.0", "@toba/tools@^4.0.3":
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/@toba/tools/-/tools-4.0.3.tgz#8c121f88174b205f6c6448330e00c4dc6a33fc6d"
   integrity sha512-3xRr6mqoKJ2xNzXoyv76pmhQKtkqTrplaByFuMsPStd9JYvCQa1oqpHXd86gmz+Le6vQRsAwCZUyOA/wnw0lcA==

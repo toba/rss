@@ -47,7 +47,7 @@ export const writeTag = (
 /**
  * Write attribute key-value pair within XML tag.
  */
-export const writeAttributes = (attr: Attributes): string =>
+export const writeAttributes = (attr?: Attributes): string =>
    is.value(attr)
       ? Array.from(attr.keys()).reduce(
            (pairs, key) => pairs + ` ${key}="${attr.get(key)}"`,
@@ -62,7 +62,7 @@ export const writeAttributes = (attr: Attributes): string =>
  *    Example Toolkit
  *  </generator>
  */
-export function writeGenerator(g: Generator): string {
+export function writeGenerator(g?: Generator): string {
    if (is.value(g)) {
       g.generator = g.name;
       writeEntityTag('generator', g);
@@ -96,7 +96,7 @@ export function writeTextTag<T extends Feed | Entry, K extends keyof T>(
    let value = '';
 
    if (is.value(content)) {
-      let type: TextType;
+      let type: TextType | undefined;
 
       if (is.text(content)) {
          type = TextType.Plain;
@@ -105,7 +105,10 @@ export function writeTextTag<T extends Feed | Entry, K extends keyof T>(
          type = content.type;
          value = content.value;
       }
-      attr.set('type', type);
+
+      if (is.value(type)) {
+         attr.set('type', type);
+      }
    }
    return writeTag(name as string, value, attr);
 }
@@ -135,7 +138,7 @@ export const write = (feed: Feed): string =>
 
 export const writeEntry = (
    entry: Entry,
-   feedAuthor: Person | Person[] = null
+   feedAuthor: Person | Person[] | null = null
 ): string =>
    '<entry>' +
    writeEntityTag('id', entry) +
@@ -178,7 +181,7 @@ export const writeLink = (link: string | Link | (string | Link)[]): string =>
  */
 export const writePerson = (
    tag: 'author' | 'contributor',
-   person: Person | Person[]
+   person?: Person | Person[]
 ): string =>
    is.array<Person>(person)
       ? person.reduce((list, p) => list + writePerson(tag, p), '')
