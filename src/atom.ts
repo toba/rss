@@ -24,8 +24,10 @@ export function writeEntityTag<
    const content = entity[name];
    let text = '';
 
-   if (is.value(content)) {
-      text = is.date(content) ? content.toISOString() : content.toString();
+   if (is.value<T[K]>(content)) {
+      text = is.date(content)
+         ? content.toISOString()
+         : (content as any).toString();
    }
    return writeTag(name as string, text, attr);
 }
@@ -48,7 +50,7 @@ export const writeTag = (
  * Write attribute key-value pair within XML tag.
  */
 export const writeAttributes = (attr?: Attributes): string =>
-   is.value(attr)
+   is.value<Attributes>(attr)
       ? Array.from(attr.keys()).reduce(
            (pairs, key) => pairs + ` ${key}="${attr.get(key)}"`,
            ''
@@ -63,7 +65,7 @@ export const writeAttributes = (attr?: Attributes): string =>
  *  </generator>
  */
 export function writeGenerator(g?: Generator): string {
-   if (is.value(g)) {
+   if (is.value<Generator>(g)) {
       g.generator = g.name;
       writeEntityTag('generator', g);
    }
@@ -95,7 +97,7 @@ export function writeTextTag<T extends Feed | Entry, K extends keyof T>(
    const attr: Map<string, string> = new Map();
    let value = '';
 
-   if (is.value(content)) {
+   if (is.value<T[K]>(content)) {
       let type: TextType | undefined;
 
       if (is.text(content)) {
@@ -106,7 +108,7 @@ export function writeTextTag<T extends Feed | Entry, K extends keyof T>(
          value = content.value;
       }
 
-      if (is.value(type)) {
+      if (is.value<TextType>(type)) {
          attr.set('type', type);
       }
    }
@@ -159,13 +161,13 @@ export const writeLink = (link: string | Link | (string | Link)[]): string =>
    is.array(link)
       ? link.reduce<string>((list, l) => list + writeLink(l), '')
       : is.text(link)
-         ? writeLink({ href: link, rel: LinkRelation.Alternate })
-         : `<link${Object.keys(link)
-              .sort()
-              .reduce((attr: string, key: string) => {
-                 const value = link[key];
-                 return attr + (is.value(value) ? ` ${key}="${value}"` : '');
-              }, '')}/>`;
+      ? writeLink({ href: link, rel: LinkRelation.Alternate })
+      : `<link${Object.keys(link)
+           .sort()
+           .reduce((attr: string, key: string) => {
+              const value = link[key];
+              return attr + (is.value(value) ? ` ${key}="${value}"` : '');
+           }, '')}/>`;
 
 /**
  * @see https://tools.ietf.org/html/rfc4287#page-10
@@ -185,10 +187,10 @@ export const writePerson = (
 ): string =>
    is.array<Person>(person)
       ? person.reduce((list, p) => list + writePerson(tag, p), '')
-      : is.value(person)
-         ? `<${tag}>` +
-           writeEntityTag('name', person) +
-           writeEntityTag('uri', person) +
-           writeEntityTag('email', person) +
-           `</${tag}>`
-         : '';
+      : is.value<Person>(person)
+      ? `<${tag}>` +
+        writeEntityTag('name', person) +
+        writeEntityTag('uri', person) +
+        writeEntityTag('email', person) +
+        `</${tag}>`
+      : '';

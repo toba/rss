@@ -1,6 +1,6 @@
 {
    "name": "@toba/feed",
-   "version": "3.0.1",
+   "version": "3.1.0",
    "description": "Toba syndication module",
    "private": false,
    "author": {
@@ -11,14 +11,17 @@
    "publishConfig": {
       "access": "public"
    },
-   "main": "lib/index.ts",
-   "types:": "js/index.d.ts",
+   "main": "cjs/index.js",
+   "module": "esm/index.js",
+   "types": "esm/index.d.ts",
    "files": [
-      "lib/**/!(*.test).ts",
-      "js"
+      "esm",
+      "cjs"
    ],
    "scripts": {
-      "prepublishOnly": "./node_modules/.bin/tsc",
+      "build:esm": "./node_modules/.bin/tsc --project ./node_modules/@toba/develop/tsconfig.esm.json",
+      "build:cjs": "./node_modules/.bin/tsc --project ./node_modules/@toba/develop/tsconfig.cjs-min.json",
+      "prepublishOnly": "npm run build:esm & npm run build:cjs",
       "test": "jest --coverage"
    },
    "keywords": [
@@ -31,13 +34,12 @@
       "blog"
    ],
    "devDependencies": {
-      "@toba/build": "^2.0.0",
-      "@toba/test": "^2.0.3",
-      "prettier": "^1.13.0",
-      "typescript": "^3.1.0"
+      "@toba/develop": "^6.6.11",
+      "@toba/test": "^4.1.0",
+      "typescript": "^3.5.0"
    },
    "dependencies": {
-      "@toba/tools": "^4.0.3"
+      "@toba/tools": "^6.0.3"
    },
    "repository": {
       "type": "git",
@@ -45,9 +47,5 @@
    },
    "bugs": {
       "url": "https://github.com/toba/feed/issues"
-   },
-   "prettier": {
-      "singleQuote": true,
-      "tabWidth": 3
    }
 }

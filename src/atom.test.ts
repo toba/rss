@@ -59,7 +59,7 @@ test('writes attribute key-values', () => {
       ['key2', 'value2']
    ]);
    expect(writeAttributes(attr)).toBe(' key1="value1" key2="value2"');
-   expect(writeAttributes(null)).toBe('');
+   expect(writeAttributes(undefined)).toBe('');
 });
 
 test('writes person', () => {
@@ -88,9 +88,7 @@ test('writes link', () => {
    const link3 = href;
 
    const expect1 = `<link href="${href}" rel="${LinkRelation.Alternate}"/>`;
-   const expect2 = `<link href="${href}" rel="${
-      LinkRelation.Enclosure
-   }" type="${MimeType.Atom}"/>`;
+   const expect2 = `<link href="${href}" rel="${LinkRelation.Enclosure}" type="${MimeType.Atom}"/>`;
 
    expect(writeLink(link1)).toBe(expect1);
    expect(writeLink(link2)).toBe(expect2);
