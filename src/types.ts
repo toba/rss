@@ -39,7 +39,7 @@ export interface Person {
    uri?: string;
 }
 
-export enum TextType {
+export const enum TextType {
    Plain = 'text',
    HTML = 'html',
    XHTML = 'xhtml'
@@ -279,7 +279,7 @@ export interface Entry {
     *
     * @example <summary>Some text.</summary>
     */
-   summary: string | Text;
+   summary?: string | Text;
 
    /**
     * Conveys information about rights, e.g. copyrights, held in and over the

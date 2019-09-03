@@ -1,5 +1,4 @@
 import { is, htmlEscape } from '@toba/tools';
-import { TextType } from './types';
 /**
  * Write an XML tag or return empty string if entity content is empty.
  * @param name Name of entity attribute.
@@ -68,7 +67,7 @@ export function writeTextTag(name, entity) {
     if (is.value(content)) {
         let type;
         if (is.text(content)) {
-            type = TextType.Plain;
+            type = "text" /* Plain */;
             value = content;
         }
         else if (is.value(content)) {

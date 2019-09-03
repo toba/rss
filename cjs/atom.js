@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tools_1 = require("@toba/tools");
-const types_1 = require("./types");
 function writeEntityTag(name, entity, attr) {
     const content = entity[name];
     let text = '';
@@ -34,7 +33,7 @@ function writeTextTag(name, entity) {
     if (tools_1.is.value(content)) {
         let type;
         if (tools_1.is.text(content)) {
-            type = types_1.TextType.Plain;
+            type = "text";
             value = content;
         }
         else if (tools_1.is.value(content)) {
