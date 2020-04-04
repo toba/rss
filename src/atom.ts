@@ -1,4 +1,4 @@
-import { is, htmlEscape, LinkRelation } from '@toba/tools';
+import { is, htmlEscape, LinkRelation } from '@toba/tools'
 import {
    Attributes,
    Link,
@@ -8,8 +8,8 @@ import {
    Text,
    TextType,
    Entry,
-   ISyndicate
-} from './types';
+   ISyndicate,
+} from './types'
 
 /**
  * Write an XML tag or return empty string if entity content is empty.
@@ -21,15 +21,15 @@ export function writeEntityTag<
    T extends Feed | Entry | Person,
    K extends keyof T
 >(name: K, entity: T, attr?: Attributes): string {
-   const content = entity[name];
-   let text = '';
+   const content = entity[name]
+   let text = ''
 
    if (is.value<T[K]>(content)) {
       text = is.date(content)
          ? content.toISOString()
-         : (content as any).toString();
+         : (content as any).toString()
    }
-   return writeTag(name as string, text, attr);
+   return writeTag(name as string, text, attr)
 }
 
 /**
@@ -44,7 +44,7 @@ export const writeTag = (
 ): string =>
    is.empty(value)
       ? ''
-      : `<${name}${writeAttributes(attr)}>${htmlEscape(value)}</${name}>`;
+      : `<${name}${writeAttributes(attr)}>${htmlEscape(value)}</${name}>`
 
 /**
  * Write attribute key-value pair within XML tag.
@@ -55,7 +55,7 @@ export const writeAttributes = (attr?: Attributes): string =>
            (pairs, key) => pairs + ` ${key}="${attr.get(key)}"`,
            ''
         )
-      : '';
+      : ''
 
 /**
  * @see https://tools.ietf.org/html/rfc4287#section-4.2.4
@@ -66,10 +66,10 @@ export const writeAttributes = (attr?: Attributes): string =>
  */
 export function writeGenerator(g?: Generator): string {
    if (is.value<Generator>(g)) {
-      g.generator = g.name;
-      writeEntityTag('generator', g);
+      g.generator = g.name
+      writeEntityTag('generator', g)
    }
-   return '';
+   return ''
 }
 
 /**
@@ -93,33 +93,30 @@ export function writeTextTag<T extends Feed | Entry, K extends keyof T>(
    name: K,
    entity: T
 ): string {
-   const content = entity[name];
-   const attr: Map<string, string> = new Map();
-   let value = '';
+   const content = entity[name]
+   const attr: Map<string, string> = new Map()
+   let value = ''
 
    if (is.value<T[K]>(content)) {
-      let type: TextType | undefined;
+      let type: TextType | undefined
 
       if (is.text(content)) {
-         type = TextType.Plain;
-         value = content;
+         type = TextType.Plain
+         value = content
       } else if (is.value<Text>(content)) {
-         type = content.type;
-         value = content.value;
+         type = content.type
+         value = content.value
       }
-
-      if (is.value<TextType>(type)) {
-         attr.set('type', type);
-      }
+      if (is.value<TextType>(type)) attr.set('type', type)
    }
-   return writeTag(name as string, value, attr);
+   return writeTag(name as string, value, attr)
 }
 
 /**
  * Render XML text for class that implements `ISyndicate`.
  */
 export const render = (source: ISyndicate<Feed>): string =>
-   write(source.rssJSON());
+   write(source.rssJSON())
 
 /**
  * Entry-point for writing Atom feed XML.
@@ -135,8 +132,8 @@ export const write = (feed: Feed): string =>
    writeEntityTag('rights', feed) +
    writePerson('author', feed.author) +
    writeGenerator(feed.generator) +
-   feed.entry.map(e => writeEntry(e, feed.author)).join('') +
-   '</feed>';
+   feed.entry.map((e) => writeEntry(e, feed.author)).join('') +
+   '</feed>'
 
 export const writeEntry = (
    entry: Entry,
@@ -152,7 +149,7 @@ export const writeEntry = (
    writeTextTag('rights', entry) +
    writeTextTag('content', entry) +
    writeTextTag('summary', entry) +
-   '</entry>';
+   '</entry>'
 
 /**
  * Write link text.
@@ -165,9 +162,9 @@ export const writeLink = (link: string | Link | (string | Link)[]): string =>
       : `<link${Object.keys(link)
            .sort()
            .reduce((attr: string, key: string) => {
-              const value = link[key];
-              return attr + (is.value(value) ? ` ${key}="${value}"` : '');
-           }, '')}/>`;
+              const value = link[key]
+              return attr + (is.value(value) ? ` ${key}="${value}"` : '')
+           }, '')}/>`
 
 /**
  * @see https://tools.ietf.org/html/rfc4287#page-10
@@ -193,4 +190,4 @@ export const writePerson = (
         writeEntityTag('uri', person) +
         writeEntityTag('email', person) +
         `</${tag}>`
-      : '';
+      : ''

@@ -1,4 +1,4 @@
-export { render } from './atom';
+export { render } from './atom'
 export {
    Entry as AtomEntry,
    Feed as AtomFeed,
@@ -8,5 +8,5 @@ export {
    Text as AtomText,
    TextType as AtomTextType,
    Category as AtomCategory,
-   ISyndicate
-} from './types';
+   ISyndicate,
+} from './types'

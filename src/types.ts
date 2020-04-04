@@ -1,48 +1,48 @@
-import { MimeType, LinkRelation } from '@toba/tools';
+import { MimeType, LinkRelation } from '@toba/tools'
 
 /**
  * Class can be rendered as an RSS/Atom feed.
  */
 export interface ISyndicate<T extends Feed | Entry> {
-   rssJSON(): T;
+   rssJSON(): T
 }
 
-export type Attributes = Map<string, string>;
-export type AtomEntity = Map<string, string | Date>;
+export type Attributes = Map<string, string>
+export type AtomEntity = Map<string, string | Date>
 
 /**
  * @see https://validator.w3.org/feed/docs/atom.html#link
  */
 export interface Link {
-   [index: string]: string | LinkRelation | MimeType | number | undefined;
+   [index: string]: string | LinkRelation | MimeType | number | undefined
    /** URI of the referenced resource (typically a Web page). */
-   href: string;
+   href: string
    /** Relation defaults to `alternate` if not specified. */
-   rel?: LinkRelation;
+   rel?: LinkRelation
    /**
     * Human readable information about the link, typically for display purposes.
     */
-   title?: string;
-   type?: MimeType;
+   title?: string
+   type?: MimeType
    /** Language of the referenced resource. */
-   hreflang?: string;
+   hreflang?: string
    /** Size in bytes */
-   length?: number;
+   length?: number
 }
 
 /**
  * @see https://validator.w3.org/feed/docs/atom.html#person
  */
 export interface Person {
-   name: string;
-   email?: string;
-   uri?: string;
+   name: string
+   email?: string
+   uri?: string
 }
 
 export const enum TextType {
    Plain = 'text',
    HTML = 'html',
-   XHTML = 'xhtml'
+   XHTML = 'xhtml',
 }
 
 /**
@@ -64,8 +64,8 @@ export const enum TextType {
  * @see https://validator.w3.org/feed/docs/atom.html#text
  */
 export interface Text {
-   value: string;
-   type?: TextType;
+   value: string
+   type?: TextType
 }
 
 /**
@@ -73,22 +73,22 @@ export interface Text {
  */
 export interface Category {
    /** Category name. */
-   term: string;
+   term: string
    /** Categorization scheme URI. */
-   scheme?: string;
+   scheme?: string
    /** Human readable label. */
-   label?: string;
+   label?: string
 }
 
 /**
  * Software that generated the feed.
  */
 export interface Generator {
-   [index: string]: string | undefined;
-   name: string;
-   generator?: string;
-   uri?: string;
-   version?: string;
+   [index: string]: string | undefined
+   name: string
+   generator?: string
+   uri?: string
+   version?: string
 }
 
 /**
@@ -109,7 +109,7 @@ export interface Feed {
     *
     * @example <id>http://example.com/</id>
     */
-   id: string;
+   id: string
 
    /**
     * Contains a human readable title for the feed. Often the same as the title
@@ -117,15 +117,15 @@ export interface Feed {
     *
     * @example <title>Example, Inc.</title>
     */
-   title: string | Text;
-   subtitle: string;
+   title: string | Text
+   subtitle: string
 
    /**
     * Indicates the last time the feed was modified in a significant way.
     *
     * @example <updated>2003-12-13T18:30:02Z</updated>
     */
-   updated: Date;
+   updated: Date
 
    /**
     * Names one author of the feed. A feed may have multiple author elements. A
@@ -139,20 +139,20 @@ export interface Feed {
     *    <uri>http://example.com/~johndoe</uri>
     * </author>
     */
-   author: Person | Person[];
+   author: Person | Person[]
 
    /**
     * Names one contributor to the feed. A feed may have multiple contributor
     * elements.
     */
-   contributor: Person | Person[];
+   contributor: Person | Person[]
 
    /**
     * Identifies a related Web page. The type of relation is defined by the
     * `rel` attribute. A feed is limited to one alternate per type and hreflang.
     * A feed should contain a link back to the feed itself.
     */
-   link: string | Link;
+   link: string | Link
 
    /**
     * Identifies a small image which provides iconic visual identification for
@@ -160,7 +160,7 @@ export interface Feed {
     *
     * @example <icon>/icon.jpg</icon>
     */
-   icon?: string;
+   icon?: string
 
    /**
     * Identifies a larger image which provides visual identification for the
@@ -168,7 +168,7 @@ export interface Feed {
     *
     * @example <logo>/logo.jpg</logo>
     */
-   logo?: string;
+   logo?: string
 
    /**
     * If multiple `atom:entry` elements with the same `atom:id` value appear in
@@ -179,7 +179,7 @@ export interface Feed {
     * One typical behavior would be to display only the entry with the
     * latest atom:updated timestamp.
     */
-   entry: Entry[];
+   entry: Entry[]
 
    /**
     * Conveys information about rights, e.g. copyrights, held in and over the
@@ -187,7 +187,7 @@ export interface Feed {
     *
     * @see https://validator.w3.org/feed/docs/atom.html#text
     */
-   rights?: string | Text;
+   rights?: string | Text
 
    /**
     * Identifies the software used to generate the feed, for debugging and other
@@ -198,7 +198,7 @@ export interface Feed {
     *    Example Toolkit
     * </generator>
     */
-   generator?: Generator;
+   generator?: Generator
 
    /**
     * Specifies a category that the feed belongs to. A feed may have multiple
@@ -206,7 +206,7 @@ export interface Feed {
     *
     * @example <category term="sports"/>
     */
-   category?: Category | Category[];
+   category?: Category | Category[]
 }
 
 /**
@@ -226,7 +226,7 @@ export interface Entry {
     *
     * @example <id>http://example.com/blog/1234</id>
     */
-   id: string;
+   id: string
 
    /**
     * Contains a human readable title for the entry. This value should not be
@@ -234,7 +234,7 @@ export interface Entry {
     *
     * @example <title>Atom-Powered Robots Run Amok</title>
     */
-   title: string | Text;
+   title: string | Text
 
    /**
     * Identifies a related Web page. The type of relation is defined by the
@@ -247,7 +247,7 @@ export interface Entry {
     *
     * @example <link rel="alternate" href="/blog/1234"/>
     */
-   link: Link | Link[] | string;
+   link: Link | Link[] | string
 
    /**
     * Contains the time of the initial creation or first availability of the
@@ -257,7 +257,7 @@ export interface Entry {
     *
     * @example <published>2003-12-13T09:17:51-08:00</published>
     */
-   published: Date;
+   published: Date
 
    /**
     * Indicates the last time the entry was modified in a significant way. This
@@ -269,7 +269,7 @@ export interface Entry {
     *
     * @example <updated>2003-12-13T18:30:02-05:00</updated>
     */
-   updated: Date;
+   updated: Date
 
    /**
     * Conveys a short summary, abstract, or excerpt of the entry. Summary should
@@ -279,7 +279,7 @@ export interface Entry {
     *
     * @example <summary>Some text.</summary>
     */
-   summary?: string | Text;
+   summary?: string | Text
 
    /**
     * Conveys information about rights, e.g. copyrights, held in and over the
@@ -290,13 +290,13 @@ export interface Entry {
     *    &amp;copy; 2005 John Doe
     * </rights>
     */
-   rights?: string | Text;
+   rights?: string | Text
 
    /**
     * Specifies a category that the entry belongs to. An entry may have multiple
     * category elements.
     */
-   category?: Category | Category[];
+   category?: Category | Category[]
 
    /**
     * Names one author of the entry. An entry may have multiple authors. An
@@ -309,8 +309,8 @@ export interface Entry {
     *    <name>John Doe</name>
     * </author>
     */
-   author?: Person | Person[];
-   contributor?: Person | Person[];
+   author?: Person | Person[]
+   contributor?: Person | Person[]
 
    /**
     * Contains or links to the complete content of the entry. Content must be
@@ -320,7 +320,7 @@ export interface Entry {
     * @example <content>complete story here</content>
     * @see https://validator.w3.org/feed/docs/atom.html#content
     */
-   content: string | Text;
+   content: string | Text
 
    /**
     * Contains metadata from the source feed if this entry is a copy.
@@ -332,5 +332,5 @@ export interface Entry {
     *    <updated>2003-12-13T18:30:02Z</updated>
     * </source>
     */
-   source?: string;
+   source?: string
 }
